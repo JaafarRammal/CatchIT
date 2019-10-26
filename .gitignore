@@ -1,3 +1,6 @@
+# Temporarily ignoring the .db files
+.db
+
 # Logs
 logs
 *.log
