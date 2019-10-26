@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+
+class ProfileView: UIViewController{
+    
+}

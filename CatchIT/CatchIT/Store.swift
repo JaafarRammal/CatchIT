@@ -6,4 +6,10 @@
 //  Copyright © 2019 Jaafar Rammal. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class StoreView: UIViewController{
+    
+}
+
+
