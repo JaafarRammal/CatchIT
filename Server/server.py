@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy import func
 from config import Config
 import json
 
@@ -64,6 +65,11 @@ def get_user(id):
     user = User.query.get(id)
     return user_schema.jsonify(user)
 
+@app.route('/user/points_available/<id>', methods=['GET'])
+def get_available_points(id):
+    sum_of_points = db.session.query(func.sum(Transaction.points).label('points')).filter(Transaction.user_id == id).scalar()
+    return '{ "points_available" : ' + str(sum_of_points) + '}'
+
 # Update a User
 @app.route('/user/<id>', methods=['PUT'])
 def update_user(id):
@@ -126,7 +132,7 @@ def add_transaction():
     if points > 0:
         new_user.points_collected = new_user.points_collected + points 
     new_user.location = location
-    
+
     db.session.add(new_transaction)
     db.session.commit()
 
@@ -137,7 +143,6 @@ def get_transaction(user_id, n):
     transactions = Transaction.query.filter(Transaction.user_id == user_id).order_by(Transaction.datetime.desc()).limit(n)
     result = transactions_schema.dump(transactions)
     return json.dumps(result)
-
 
 
 if __name__ == '__main__':
