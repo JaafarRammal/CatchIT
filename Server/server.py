@@ -65,10 +65,22 @@ def get_user(id):
     user = User.query.get(id)
     return user_schema.jsonify(user)
 
+# Get a user's remaining points to spend
 @app.route('/user/points_available/<id>', methods=['GET'])
 def get_available_points(id):
     sum_of_points = db.session.query(func.sum(Transaction.points).label('points')).filter(Transaction.user_id == id).scalar()
     return '{ "points_available" : ' + str(sum_of_points) + '}'
+
+# Get a user's position on the leaderboard
+@app.route('/user/<id>/position', methods=['GET'])
+def get_user_position(id):
+    user = User.query.get(id)
+    q = db.session.query(User).filter(User.location == user.location).filter(User.points_collected > user.points_collected)
+
+    higher_user_count = q.statement.with_only_columns([func.count()]).order_by(None)
+    user_position = q.session.execute(higher_user_count).scalar() + 1
+
+    return '{ "user_position" : ' + str(user_position) + '}'
 
 # Update a User
 @app.route('/user/<id>', methods=['PUT'])
