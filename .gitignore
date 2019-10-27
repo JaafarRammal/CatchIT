@@ -1,6 +1,10 @@
 # Temporarily ignoring the .db files
 .db
 
+# ignore pycache folders
+Server/__pycache__
+Server/.vscode/
+
 # Logs
 logs
 *.log

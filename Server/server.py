@@ -36,7 +36,7 @@ def add_user():
     points_collected = request.json['points_collected']
     location = request.json['location']
 
-    new_user = User(name, points_collected)
+    new_user = User(name, points_collected, location)
 
     db.session.add(new_user)
     db.session.commit()
