@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		991F9AB92364E1120088BF54 /* customCellDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991F9AB82364E1120088BF54 /* customCellDesign.swift */; };
 		E5703A3C2364AFD800B359A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5703A3B2364AFD800B359A3 /* AppDelegate.swift */; };
 		E5703A3E2364AFD800B359A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5703A3D2364AFD800B359A3 /* SceneDelegate.swift */; };
 		E5703A402364AFD800B359A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5703A3F2364AFD800B359A3 /* ViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		991F9AB82364E1120088BF54 /* customCellDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customCellDesign.swift; sourceTree = "<group>"; };
 		E5703A382364AFD800B359A3 /* CatchIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5703A3B2364AFD800B359A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5703A3D2364AFD800B359A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		991F9AB72364E0E70088BF54 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				991F9AB82364E1120088BF54 /* customCellDesign.swift */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		E5703A2F2364AFD700B359A3 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +133,7 @@
 		E5703A3A2364AFD800B359A3 /* CatchIT */ = {
 			isa = PBXGroup;
 			children = (
+				991F9AB72364E0E70088BF54 /* New Group */,
 				E5703A3B2364AFD800B359A3 /* AppDelegate.swift */,
 				E5703A3D2364AFD800B359A3 /* SceneDelegate.swift */,
 				E5703A3F2364AFD800B359A3 /* ViewController.swift */,
@@ -300,6 +311,7 @@
 			files = (
 				E5703A402364AFD800B359A3 /* ViewController.swift in Sources */,
 				E5E0BA962364B81000ABCF04 /* Profile.swift in Sources */,
+				991F9AB92364E1120088BF54 /* customCellDesign.swift in Sources */,
 				E5E0BA8E2364B7DC00ABCF04 /* Leaderboard.swift in Sources */,
 				E5E0BA9A2364B81600ABCF04 /* Store.swift in Sources */,
 				E5703A3C2364AFD800B359A3 /* AppDelegate.swift in Sources */,
