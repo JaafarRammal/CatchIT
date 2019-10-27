@@ -156,6 +156,79 @@ def get_transaction(user_id, n):
     result = transactions_schema.dump(transactions)
     return json.dumps(result)
 
+# ITEM API CALLS
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    label = db.Column(db.String(80), unique=True, nullable=False)
+    points = db.Column(db.Integer)
+    def __init__(self, label, points):
+        self.label = label
+        self.points = points
+
+class ItemSchema(ma.Schema):
+    class Meta:
+        fields = ('id','label','points')
+
+item_schema = ItemSchema()
+items_schema = ItemSchema(many=True)
+
+# Create a new Item
+@app.route('/item', methods=['POST'])
+def add_item():
+    label = request.json['label']
+    points = request.json['points']
+
+    new_item = Item(label, points)
+
+    db.session.add(new_item)
+    db.session.commit()
+    
+    return item_schema.jsonify(new_item)
+
+# Get all Items
+@app.route('/items', methods=['GET'])
+def get_items():
+    all_items = Item.query.all()
+    result = items_schema.dump(all_items)
+
+    return json.dumps(result)
+
+# Get single Item
+@app.route('/item/<id>', methods=['GET'])
+def get_item(id):
+    item = Item.query.get(id)
+    return item_schema.jsonify(item)
+
+# Get the points value of a single item
+@app.route('/item/<label>', methods=['GET'])
+def get_item_points(label):
+    item = Item.query.filter(Item.label == label).first()
+    return item_schema.jsonify(item.points)
+
+# Update an Item
+@app.route('/item/<id>', methods=['PUT'])
+def update_product(id):
+    item = Item.query.get(id)
+
+    label = request.json['label']
+    points = request.json['points']
+
+    item.label = label
+    item.points = points
+
+    db.session.commit()
+
+    return item_schema.jsonify(item)
+
+# Delete Item
+@app.route('/item/<id>', methods=['DELETE'])
+def delete_product(id):
+    item = Item.query.get(id)
+    db.session.delete(item)
+    db.session.commit()
+
+    return item_schema.jsonify(item)
 
 if __name__ == '__main__':
     app.run(port='5002')
