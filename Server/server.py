@@ -10,18 +10,22 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+# USER API CALLS
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     points_collected = db.Column(db.Integer, default=0)
+    location = db.Column(db.String(80))
 
-    def __init__(self, name, points_collected):
+    def __init__(self, name, points_collected, location):
         self.name = name
         self.points_collected = points_collected
+        self.location = location
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'points_collected')
+        fields = ('id', 'name', 'points_collected', 'location')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -30,6 +34,7 @@ users_schema = UserSchema(many=True)
 def add_user():
     name = request.json['name']
     points_collected = request.json['points_collected']
+    location = request.json['location']
 
     new_user = User(name, points_collected)
 
@@ -37,7 +42,6 @@ def add_user():
     db.session.commit()
 
     return user_schema.jsonify(new_user)
-
 
 # Get n Users
 @app.route('/users', methods=['GET'])
@@ -81,6 +85,43 @@ def delete_user(id):
     db.session.commit()
 
     return user_schema.jsonify(user)
+
+# TRANSACTION API CALLS
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    points = db.Column(db.Integer)
+    item_label = db.Column(db.String(80))
+    datetime = db.Column(db.Integer)
+    location = db.Column(db.String(80))
+    
+    def __init__(self, points, item_label, datetime, location):
+        self.points = points
+        self.item_label = item_label
+        self.datetime = datetime
+        self.location = location
+
+class TransactionSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'points', 'item_label', 'datetime', 'location')
+
+transaction_schema = TransactionSchema()
+transactions_schema = TransactionSchema(many=True)
+
+@app.route('/transaction', methods=['POST'])
+def add_transaction():
+    points = request.json['points']
+    item_label = request.json['item_label']
+    datetime = request.json['datetime']
+    location = request.json['location']
+
+    new_transaction = Transaction(points, item_label, datetime, location)
+
+    db.session.add(new_transaction)
+    db.session.commit()
+
+    return transaction_schema.jsonify(new_transaction)
+
 
 if __name__ == '__main__':
     app.run(port='5002')
