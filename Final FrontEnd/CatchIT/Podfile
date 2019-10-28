@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+
+target 'CatchIT' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for CatchIT
+  pod 'Firebase'
+  pod 'Firebase/MLVision'
+  pod 'Firebase/Analytics'
+
+  target 'CatchITTests' do
+    inherit! :search_paths
+  end
+
+  target 'CatchITUITests' do
+  end
+
+end
